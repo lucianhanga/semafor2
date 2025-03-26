@@ -24,22 +24,20 @@ def get_terraform_output(output_name):
 settings = {
     "IsEncrypted": False,
     "Values": {
+        "FUNCTIONS_WORKER_RUNTIME": "node",
         "AzureWebJobsStorage": f"DefaultEndpointsProtocol=https;AccountName={get_terraform_output('storage_account_name')};AccountKey={get_terraform_output('storage_account_key')};EndpointSuffix=core.windows.net",  # Replace with actual key
-        "AzureWebJobs.ImageAvailable.Disabled": "true",
-        "FUNCTIONS_WORKER_RUNTIME": "python",
-        "STORAGE_ACCOUNT_NAME": get_terraform_output("storage_account_name"),
-        "DOCUMENT_INTELLIGENCE_ENDPOINT": get_terraform_output("document_intelligence_endpoint"),
-        "DOCUMENT_INTELLIGENCE_KEY": get_terraform_output("document_intelligence_key"),
-        "REQUIRED_GROUP_ID": "c1b83efb-4637-4ca0-9a7e-13e069be8ef5",
-        "SEMAFOR2_API_CLIENT_ID": get_terraform_output("semafor2_api_client_id"),
-        "SEMAFOR2_API_CLIENT_SECRET": get_terraform_output("semafor2_api_client_secret"),
-        "SEMAFOR2_API_TENANT_ID": get_terraform_output("semafor2_api_tenant_id"),
-        "STORAGE_ACCOUNT_PRIMARY_WEB_ENDPOINT": get_terraform_output("storage_account_primary_web_endpoint")
+        "CLIENT_ID": get_terraform_output("semafor2_api_client_id"),
+        "TENANT_ID": get_terraform_output("semafor2_api_tenant_id"),
+        "CLIENT_SECRET": get_terraform_output("semafor2_api_client_secret"),
+        "AZURE_STORAGE_CONNECTION_STRING": get_terraform_output("storage_account_connection_string")
+    },
+    "Host": {
+    "CORS": "http://localhost:3000"
     }
 }
 
 # Write to local.settings.json
-with open("../semafor2-api/local.settings.json", "w") as f:
+with open("../status-api/local.settings.json", "w") as f:
     json.dump(settings, f, indent=4)
 
 print("✅ local.settings.json file has been successfully generated!")

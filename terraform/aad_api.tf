@@ -13,6 +13,14 @@ resource "azuread_application" "semafor2_api" {
       id   = "e1fe6dd8-ba31-4d61-89e7-88639da4683d"  # User.Read (Delegated)
       type = "Scope"
     }
+    resource_access {
+      id   = "98830695-27a2-44f7-8c18-0c3ebc9698f6"
+        type = "Role"
+    }
+    resource_access {
+      id   = "df021288-bdef-4463-88db-98f22de89214"
+      type = "Role"
+    }
   }
 
   api {

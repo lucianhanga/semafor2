@@ -54,6 +54,11 @@ output "storage_account_key" {
   sensitive   = true
 }
 
+output "storage_account_connection_string" {
+  description = "The connection string for the storage account"
+  value       = azurerm_storage_account.st.primary_connection_string
+  sensitive   = true
+}
 
 # give "Storage Table Data Contributor" role to the storage account for the actual user
 resource "azurerm_role_assignment" "role_table" {

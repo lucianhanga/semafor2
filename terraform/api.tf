@@ -37,7 +37,7 @@ resource "azurerm_linux_function_app" "api" {
 
   site_config {
     application_stack {
-      python_version = "3.10"
+      node_version = "20"
     }
 
     cors {
