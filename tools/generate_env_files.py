@@ -36,11 +36,11 @@ REACT_APP_API_BASE_URL=https://{get_terraform_output('api_base_url')}/api/
 """
 
 # Write to .env.development
-with open("../semafor2-app/.env.development", "w") as f:
+with open("../status-app/.env.development", "w") as f:
     f.write(env_development.strip())
 
 # Write to .env.production
-with open("../semafor2-app/.env.production", "w") as f:
+with open("../status-app/.env.production", "w") as f:
     f.write(env_production.strip())
 
 print("✅ .env.development and .env.production files have been successfully generated!")
