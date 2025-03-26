@@ -34,58 +34,49 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
+  width: 300px; /* Adjust width to allocate more space for name */
   padding: 10px;
   background: white;
   border-radius: 8px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
   margin-bottom: 10px;
   font-size: 12px; /* Reduce font size */
-  height: 24px; /* Reduce height */
+  height: 40px; /* Adjust height */
   line-height: 20px; /* Adjust line height */
   position: relative;
   border-bottom: 1px solid #ccc;
 }
 
 .name {
+  flex: 3; /* Adjust the flex value to allocate more space */
   font-weight: bold;
+  margin-right: 10px;
+  font-size: 1.5em; /* Adjust the font size as needed */
+}
+
+.leads {
+  flex: 1; /* Adjust the flex value to allocate space */
+  text-align: center; /* Center the text */
+  font-size: 1.4em; /* Adjust the font size as needed */
+  /* add some margin to the right */
   margin-right: 10px;
 }
 
 .status {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px transparent black;
-  display: inline-block;
+  flex: 0 0 20px; /* Ensure the status has a fixed size */
+  width: 20px; /* Adjust the size as needed */
+  height: 20px; /* Adjust the size as needed */
+  border-radius: 50%; /* Make it a circle */
+  background-color: currentColor; /* Use the current text color */
 }
 
 .absent { background-color: red; }
-.lead { background-color: yellow;}
-.busy { background-color: gray; }
 .available { background-color: green; }
 
 .status.available {
   background-color: #4caf50;
 }
 
-.status.lead {
-  background-color: yellow;
-}
-
 .status.absent {
   background-color: #ff4d4d;
-}
-
-.status.busy {
-  background-color: gray;
-}
-
-/* Tooltip styles */
-.__react_component_tooltip {
-  font-size: 14px;
-  padding: 5px 10px;
-  background: #333;
-  color: #fff;
-  border-radius: 4px;
 }
