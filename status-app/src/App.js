@@ -24,6 +24,8 @@ const App = () => {
         };
         dispatch(setCurrentUser(currentUser));
 
+        // log the current user
+        console.log("Current User:", currentUser);
         try {
           console.log("Attempting to acquire token silently...");
           const tokenResponse = await instance.acquireTokenSilent({

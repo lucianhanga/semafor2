@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // Define the initial state
 const initialState = {
   users: [],
-  currentUser: { id: "", name: "", status: "available", text: "" },
+  currentUser: { id: "", name: "", status: "available", leads: 0 },
   status: 'idle',
   error: null,
   usersHash: null // Add a field to store the hash of the users list
@@ -70,9 +70,9 @@ export const fetchCurrentUser = createAsyncThunk('users/fetchCurrentUser', async
 });
 
 // Create an async thunk to update the user status
-export const updateUserStatus = createAsyncThunk('users/updateUserStatus', async ({ status, text }, { getState }) => {
+export const updateUserStatus = createAsyncThunk('users/updateUserStatus', async ({ status, leads }, { getState }) => {
   const { currentUser } = getState().users;
-  const updatedUser = { ...currentUser, status, text };
+  const updatedUser = { ...currentUser, status, leads };
   console.log("Updating user status:", updatedUser);
   const response = await fetch(`${API_BASE_URL}/UpdateState`, {
     method: 'POST',
@@ -113,6 +113,7 @@ const userSlice = createSlice({
         const updatedCurrentUser = state.users.find(user => user.id === state.currentUser.id);
         if (updatedCurrentUser) {
           state.currentUser.status = updatedCurrentUser.status;
+          state.currentUser.leads = updatedCurrentUser.leads;
         }
       })
       .addCase(fetchUsers.rejected, (state, action) => {
