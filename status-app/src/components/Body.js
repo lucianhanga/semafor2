@@ -6,12 +6,8 @@ import "./Body.css"; // Import the CSS file for styling
 const Body = () => {
   return (
     <div className="body">
-      <div className="user-list">
-        <UserList /> {/* Add the UserList component */}
-      </div>
-      <div className="current-user">
-        <CurrentUser /> {/* Add the CurrentUser component */}
-      </div>
+      <UserList /> {/* Add the UserList component */}
+      <CurrentUser /> {/* Add the CurrentUser component */}
     </div>
   );
 };

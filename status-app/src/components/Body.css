@@ -1,13 +1,18 @@
 .body {
   display: flex;
-  height: 100%; /* Ensure the body takes up the available space */
+  flex-direction: column; /* Stack components vertically */
+  height: 100%; /* Ensure the body takes up the full height of the parent container */
+  width: 100%; /* Ensure the body takes up the full width of the parent container */
 }
 
-.user-list {
-  flex: 3; /* 75% of the space */
-  border-right: 1px solid #ddd; /* Optional: Add a separator */
+.body > * {
+  flex: 1; /* Allow each child to take up equal space */
+  overflow: auto; /* Add scrolling if content overflows */
 }
 
 .current-user {
-  flex: 1; /* 25% of the space */
+  border-top: 1px solid #ddd; /* Add a border to separate from the UserList */
+  background-color: #f1f1f1; /* Light gray background for CurrentUser */
+  padding: 10px; /* Add padding for spacing */
 }
+

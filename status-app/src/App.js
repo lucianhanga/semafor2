@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import AuthenticatedApp from "./components/AuthenticatedApp";
 import UnAuthenticatedApp from "./components/UnAuthenticatedApp";
 import LogOutBar from "./components/LogOutBar"; // Import LogOutBar
+import { Provider } from "./contexts/users";
 import "./App.css";
 
 const App = () => {
@@ -27,7 +28,9 @@ const App = () => {
       <AuthenticatedTemplate>
         <LogOutBar /> {/* Add LogOutBar at the top */}
         {isAuthorized ? (
-          <AuthenticatedApp account={account} />
+          <Provider>
+            <AuthenticatedApp account={account} />
+          </Provider>
         ) : (
           <UnAuthenticatedApp />
         )}
