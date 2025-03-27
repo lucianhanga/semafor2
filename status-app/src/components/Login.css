@@ -1,37 +1,31 @@
-/* filepath: /home/lh/lgit/semafor/status-app/src/components/Login.css */
 .login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f0f0f0;
+  text-align: center;
+  margin-top: 50px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
   border-radius: 8px;
-  max-width: 300px; /* Set a maximum width */
-  margin: auto; /* Center the container */
-  overflow: hidden; /* Hide overflow to prevent scrollbars */
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .login-container h2 {
-  margin-bottom: 10px; /* Reduce margin */
-  font-size: 16px; /* Reduce the font size */
   color: #333;
-  text-align: center; /* Center the text */
+  margin-bottom: 20px;
 }
 
-.login-button {
-  padding: 8px 16px; /* Reduce padding */
-  font-size: 14px; /* Reduce the font size */
+.login-container button {
+  padding: 10px 20px;
+  font-size: 16px;
   color: #fff;
   background-color: #0078d4;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.login-container button:hover {
   background-color: #005a9e;
 }

@@ -1,0 +1,21 @@
+.unauthenticated-app {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.unauthenticated-app h2 {
+  color: #d9534f;
+}
+
+.unauthenticated-app p {
+  font-size: 16px;
+  color: #555;
+}

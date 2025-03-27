@@ -1,0 +1,13 @@
+.authenticated-app {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.authenticated-app h2 {
+  color: #4caf50;
+}
+
+.authenticated-app p {
+  font-size: 16px;
+  color: #555;
+}

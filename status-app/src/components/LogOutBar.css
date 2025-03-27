@@ -1,0 +1,26 @@
+.logout-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 10px; /* Reduced padding for a thinner bar */
+  background-color: #0078d4;
+  color: white;
+  font-size: 14px; /* Smaller font size */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.logout-bar-title {
+  font-weight: bold;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px; /* Slightly smaller icon size */
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  color: #ffcccb;
+}
