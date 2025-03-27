@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 import { useMsal } from '@azure/msal-react'; // Import useMsal from msal-react
+import { loginRequest } from '../authConfig'; // Import loginRequest
 import axios from 'axios'; // Import axios
 
 // Get the API base URL from environment variables
@@ -9,7 +10,7 @@ const UsersContext = createContext();
 
 function Provider({ children }) {
   // get the msal the account
-  const { accounts } = useMsal();
+  const {instance, accounts } = useMsal();
   const account = accounts && accounts.length > 0 ? accounts[0] : null;
   // log the account
   console.log('Account:', account);
@@ -19,8 +20,21 @@ function Provider({ children }) {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/UpdateUsers`); // Use axios to make the GET request
-      console.log('Response:', response.data); // Log the response to inspect its structure
+      // Get the access token
+      console.log("Attempting to acquire token silently...");
+      const tokenResponse = await instance.acquireTokenSilent({
+        ...loginRequest,
+        account: account,
+      });
+      console.log("Token acquired:", tokenResponse.accessToken);
+
+      // Make the GET request with the Authorization header
+      const response = await axios.get(`${API_BASE_URL}/UpdateUsers`, {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.accessToken}`, // Add the access token to the Authorization header
+        },
+      });
+      console.log("Response:", response.data); // Log the response to inspect its structure
 
       // Check if response.data is an array or contains the array in a nested property
       const usersArray = Array.isArray(response.data)
@@ -36,18 +50,18 @@ function Provider({ children }) {
       }));
 
       setUsers(mappedUsers); // Set the users with the mapped response data
-      console.log('Mapped Users:', mappedUsers);
+      console.log("Mapped Users:", mappedUsers);
 
       // Find the current user based on the account information
       const currentUser = mappedUsers.find((user) => user.id === account.localAccountId);
       if (currentUser) {
         setCurrentUser(currentUser); // Set the current user
-        console.log('Current User:', currentUser);
+        console.log("Current User:", currentUser);
       } else {
-        console.error('Current user not found in the users list.');
+        console.error("Current user not found in the users list.");
       }
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
 

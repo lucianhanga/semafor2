@@ -39,5 +39,5 @@ export const msalConfig = {
 };
 
 export const loginRequest = {
-  scopes: ["User.Read"], // Ensure the required scopes are correct
+  scopes: ["api://semafor2/user_impersonation"], // Ensure the required scopes are correct
 };
