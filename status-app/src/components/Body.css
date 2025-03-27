@@ -1,0 +1,13 @@
+.body {
+  display: flex;
+  height: 100%; /* Ensure the body takes up the available space */
+}
+
+.user-list {
+  flex: 3; /* 75% of the space */
+  border-right: 1px solid #ddd; /* Optional: Add a separator */
+}
+
+.current-user {
+  flex: 1; /* 25% of the space */
+}
