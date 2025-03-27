@@ -1,0 +1,13 @@
+.status-bar {
+  background-color: #0078d4; /* Blue background similar to Header */
+  color: white; /* White text color */
+  padding: 10px 20px; /* Add some padding */
+  text-align: center; /* Center the text */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Make the text bold */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow at the top */
+  border-top: 2px solid #005a9e; /* Add a border at the top */
+  position: fixed; /* Fix the StatusBar at the bottom */
+  bottom: 0; /* Position it at the bottom of the viewport */
+  width: 100%; /* Make it span the full width */
+}

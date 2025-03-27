@@ -29,6 +29,9 @@ export const msalConfig = {
           case LogLevel.Warning:
             console.warn(message);
             return;
+          default:
+            console.log(message); // Handle unexpected log levels
+            return;
         }
       },
     },
