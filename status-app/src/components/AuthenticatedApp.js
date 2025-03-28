@@ -17,7 +17,7 @@ const AuthenticatedApp = ({ account }) => {
   }, [fetchUsers]);
 
   // Set up an interval to fetch users every 5 seconds
-  useFetchUsersInterval(20000, fetchUsers); // Fetch users every 5 seconds
+  useFetchUsersInterval(10000, fetchUsers); // Fetch users every 5 seconds
 
   return (
     <div className="authenticated-app">

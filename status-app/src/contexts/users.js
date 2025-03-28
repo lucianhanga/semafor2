@@ -19,6 +19,31 @@ function Provider({ children }) {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
+  const updateCurrentUser = useCallback( async (user) => {
+    console.log("Updating current user:", user);
+
+    try {
+      // Get the access token
+      console.log("Attempting to acquire token silently...");
+      const tokenResponse = await instance.acquireTokenSilent({
+        ...loginRequest,
+        account: account,
+      });
+      console.log("Token acquired:", tokenResponse.accessToken);
+
+      // Make the POST request with the Authorization header
+      const response = await axios.post(`${API_BASE_URL}/UpdateState`, user, {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.accessToken}`, // Add the access token to the Authorization header
+        },
+      });
+      console.log("Response:", response.data); // Log the response to inspect its structure
+
+    } catch (error) {
+      console.error("Error updating the current user.", error);
+    }
+  } , []);
+
   // Define fetchUsers as a callback
   const fetchUsers = useCallback(async () => {
     try {
@@ -70,6 +95,7 @@ function Provider({ children }) {
   const valueToShare = {
     users,
     currentUser,
+    updateCurrentUser, 
     fetchUsers,
   };
 
