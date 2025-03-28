@@ -22,10 +22,7 @@ const CurrentUser = () => {
 
   const handleSetOffline = () => {
     // if the user is set offline, set the leads to 0
-    if (currentUser.leads > 0) {
-      updateCurrentUser({ ...currentUser, leads: 0 });
-    }
-    updateCurrentUser({ ...currentUser, status: "offline" });
+    updateCurrentUser({ ...currentUser, status: "offline", leads: 0 });
     fetchUsers();
   };
 
@@ -33,9 +30,11 @@ const CurrentUser = () => {
   const handleIncreaseLeads = () => {
     if (currentUser.leads < 4) {
       const newCurrentUser = { ...currentUser, leads: currentUser.leads + 1 };
+      newCurrentUser.status = "online"; // set the status to online
       // if the leads are 4, set the status to busy
       if (newCurrentUser.leads === 4) {
-        updateCurrentUser({ ...newCurrentUser, status: "busy" });
+        // just set the status to busy in the newCurrentUser object
+        newCurrentUser.status = "busy";
       }
       updateCurrentUser(newCurrentUser);
       fetchUsers();
@@ -46,10 +45,9 @@ const CurrentUser = () => {
     if (currentUser.leads > 0) {
       const newCurrentUser = { ...currentUser, leads: currentUser.leads - 1 };
       if (newCurrentUser.leads < 4) {
-        updateCurrentUser({ ...newCurrentUser, status: "online" });
+        newCurrentUser.status = "online"; // set the status to online
       }
-
-      updateCurrentUser({ ...currentUser, leads: currentUser.leads - 1 });
+      updateCurrentUser(newCurrentUser);
       fetchUsers();
     }
   };
