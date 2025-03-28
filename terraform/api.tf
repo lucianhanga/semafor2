@@ -50,8 +50,11 @@ resource "azurerm_linux_function_app" "api" {
   }
 
   app_settings = {
-    "STORAGE_ACCOUNT_NAME" = azurerm_storage_account.st.name,
-    "SEMAFOR2_API_CLIENT_SECRET" = azuread_application_password.semafor2_api_secret.value,
+    "AZURE_STORAGE_CONNECTION_STRING" = azurerm_storage_account.st.primary_connection_string
+    "STORAGE_ACCOUNT_NAME"            = azurerm_storage_account.st.name,
+    "CLIENT_ID"                       = azuread_application.semafor2_api.client_id,
+    "CLIENT_SECRET"                   = azuread_application_password.semafor2_api_secret.value,
+    "TENANT_ID"                       = data.azurerm_client_config.current.tenant_id
 #    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.app_insights.instrumentation_key
   }
 
