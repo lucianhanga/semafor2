@@ -16,8 +16,10 @@ const CurrentUser = () => {
 
   // Handlers to change the status
   const handleSetOnline = () => {
-    updateCurrentUser({ ...currentUser, status: "online" });
-    fetchUsers();
+    if (currentUser.status !== "busy") {
+      updateCurrentUser({ ...currentUser, status: "online" });
+      fetchUsers();
+    }
   };
 
   const handleSetOffline = () => {
@@ -67,7 +69,9 @@ const CurrentUser = () => {
         <button onClick={handleSetOnline}>Set Online</button>
         <button onClick={handleSetOffline}>Set Offline</button>
       </div>
-      <div className={statusClass}>{currentUser.status}</div> {/* Status banner */}
+      <div className={statusClass}>
+        {currentUser.status === "busy" ? "full" : currentUser.status}
+      </div> {/* Status banner */}
     </div>
   );
 };
