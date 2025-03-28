@@ -24,7 +24,6 @@
   font-weight: bold;
   padding: 10px;
   margin-top: 15px;
-  margin-bottom: 15px;
   border-radius: 4px;
   color: white;
 }
@@ -42,6 +41,37 @@
   background-color: purple; /* Purple for Busy */
 }
 
+/* Leads buttons styling */
+.leads-buttons {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content horizontally */
+}
+
+.leads-buttons button {
+  margin: 0 10px;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #0078d4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leads-buttons button:hover {
+  opacity: 0.9;
+}
+
+.leads-buttons strong {
+  font-size: 16px;
+}
+
+/* Status buttons styling */
 .status-buttons {
   margin-top: 15px;
 }
