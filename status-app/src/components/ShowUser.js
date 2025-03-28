@@ -4,12 +4,12 @@ import "./ShowUser.css"; // Import the CSS file for styling
 const ShowUser = ({ user }) => {
   const getStatusSymbol = (status) => {
     switch (status) {
-      case "Online":
-        return <span className="status-symbol online">●</span>;
-      case "Offline":
-        return <span className="status-symbol offline">●</span>;
-      case "Busy":
-        return <span className="status-symbol busy">●</span>;
+      case "online":
+        return <span className="status-symbol online" title="Online">●</span>;
+      case "offline":
+        return <span className="status-symbol offline" title="Offline">●</span>;
+      case "busy":
+        return <span className="status-symbol busy" title="Busy">●</span>;
       default:
         return null;
     }

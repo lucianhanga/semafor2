@@ -3,7 +3,9 @@ import UserList from "./UserList"; // Import the UserList component
 import CurrentUser from "./CurrentUser"; // Import the CurrentUser component
 import "./Body.css"; // Import the CSS file for styling
 
-const Body = () => {
+const Body = () => 
+{
+
   return (
     <div className="body">
       <UserList /> {/* Add the UserList component */}

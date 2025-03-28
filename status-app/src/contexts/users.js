@@ -1,108 +1,76 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useCallback } from 'react';
+import { useMsal } from '@azure/msal-react'; // Import useMsal from msal-react
+import { loginRequest } from '../authConfig'; // Import loginRequest
+import axios from 'axios'; // Import axios
+
+// Get the API base URL from environment variables
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const UsersContext = createContext();
 
 function Provider({ children }) {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: 'John Doe',
-      status: 'Online',
-      leads: 4,
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      status: 'Offline',
-      leads: 2,
-    },
-    {
-      id: 3,
-      name: 'Alice Johnson',
-      status: 'Away',
-      leads: 5,
-    },
-    {
-      id: 4,
-      name: 'Bob Brown',
-      status: 'Busy',
-      leads: 3,
-    },
-    {
-      id: 5,
-      name: 'Charlie Davis',
-      status: 'Online',
-      leads: 1,
-    },
-    {
-      id: 6,
-      name: 'Diana Prince',
-      status: 'Offline',
-      leads: 0,
-    },
-    {
-      id: 7,
-      name: 'Ethan Hunt',
-      status: 'Away',
-      leads: 2,
-    },
-    {
-      id: 8,
-      name: 'Fiona Apple',
-      status: 'Busy',
-      leads: 4,
-    },
-    {
-      id: 9,
-      name: 'George Clooney',
-      status: 'Online',
-      leads: 3,
-    },
-    {
-      id: 10,
-      name: 'Hannah Montana',
-      status: 'Offline',
-      leads: 1,
-    },
-    {
-      id: 11,
-      name: 'Ian Somerhalder',
-      status: 'Away',
-      leads: 2,
-    },
-    {
-      id: 12,
-      name: 'Jessica Alba',
-      status: 'Busy',
-      leads: 5,
-    },
-    {
-      id: 13,
-      name: 'Kevin Bacon',
-      status: 'Online',
-      leads: 0,
-    },
-    {
-      id: 14,
-      name: 'Liam Neeson',
-      status: 'Offline',
-      leads: 3,
-    },
-    {
-      id: 15,
-      name: 'Megan Fox',
-      status: 'Away',
-      leads: 4,
-    },
-  ]);
+  // Get the MSAL account
+  const { instance, accounts } = useMsal();
+  const account = accounts && accounts.length > 0 ? accounts[0] : null;
 
-  // Filter users to include only those with statuses: Busy, Online, Offline
-  const filteredUsers = users.filter((user) =>
-    ['Busy', 'Online', 'Offline'].includes(user.status)
-  );
+  // Log the account
+  console.log('Account:', account);
+
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
+
+  // Define fetchUsers as a callback
+  const fetchUsers = useCallback(async () => {
+    try {
+      // Get the access token
+      console.log("Attempting to acquire token silently...");
+      const tokenResponse = await instance.acquireTokenSilent({
+        ...loginRequest,
+        account: account,
+      });
+      console.log("Token acquired:", tokenResponse.accessToken);
+
+      // Make the GET request with the Authorization header
+      const response = await axios.get(`${API_BASE_URL}/UpdateUsers`, {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.accessToken}`, // Add the access token to the Authorization header
+        },
+      });
+      console.log("Response:", response.data); // Log the response to inspect its structure
+
+      // Check if response.data is an array or contains the array in a nested property
+      const usersArray = Array.isArray(response.data)
+        ? response.data
+        : response.data.users || []; // Adjust this based on the actual structure
+
+      // Map the response to the users array
+      const mappedUsers = usersArray.map((user) => ({
+        id: user.rowKey,
+        name: user.name,
+        status: user.status,
+        leads: user.leads,
+      }));
+
+      setUsers(mappedUsers); // Set the users with the mapped response data
+      console.log("Mapped Users:", mappedUsers);
+
+      // Find the current user based on the account information
+      const currentUser = mappedUsers.find((user) => user.id === account.localAccountId);
+      if (currentUser) {
+        setCurrentUser(currentUser); // Set the current user
+        console.log("Current User:", currentUser);
+      } else {
+        console.error("Current user not found in the users list.");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }, [account, instance]); // Dependencies: account and instance
 
   const valueToShare = {
-    users: filteredUsers,
+    users,
+    currentUser,
+    fetchUsers,
   };
 
   return (

@@ -50,7 +50,7 @@ app.http('UpdateUsers', {
         partitionKey: "Users",
         rowKey: user.id,
         name: user.displayName,
-        status: "absent", // Default status set to "absent"
+        status: "offline", // Default status set to "offline"
         leads: 0, // Default leads set to 0 
         text: "" // Default text set to empty string
       }));
