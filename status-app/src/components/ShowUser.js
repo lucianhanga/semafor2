@@ -9,7 +9,7 @@ const ShowUser = ({ user }) => {
       case "offline":
         return <span className="status-symbol offline" title="Offline">●</span>;
       case "busy":
-        return <span className="status-symbol busy" title="Full">●</span>;
+        return <span className="status-symbol busy" title="Busy">●</span>;
       default:
         return null;
     }
