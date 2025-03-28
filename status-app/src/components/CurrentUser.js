@@ -24,7 +24,7 @@ const CurrentUser = () => {
 
   const handleSetOffline = () => {
     // if the user is set offline, set the leads to 0
-    updateCurrentUser({ ...currentUser, status: "offline", leads: 0 });
+    updateCurrentUser({ ...currentUser, status: "offline" });
     fetchUsers();
   };
 
