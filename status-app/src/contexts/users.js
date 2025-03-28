@@ -42,7 +42,7 @@ function Provider({ children }) {
     } catch (error) {
       console.error("Error updating the current user.", error);
     }
-  } , []);
+  } , [account, instance]);
 
   // Define fetchUsers as a callback
   const fetchUsers = useCallback(async () => {
