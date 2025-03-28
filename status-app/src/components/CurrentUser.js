@@ -9,8 +9,12 @@ const CurrentUser = () => {
     return <div>No current user found.</div>; // Handle case where currentUser is not set
   }
 
+  // Determine the CSS class for the status banner
+  const statusClass = `status-banner ${currentUser.status.toLowerCase()}`;
+
   return (
     <div className="current-user">
+      <div className={statusClass}>{currentUser.status}</div> {/* Status banner */}
       <h2>Current User</h2>
       <p><strong>Name:</strong> {currentUser.name}</p>
       <p><strong>Status:</strong> {currentUser.status}</p>
