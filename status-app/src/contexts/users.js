@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useCallback } from 'react';
 import { useMsal } from '@azure/msal-react'; // Import useMsal from msal-react
 import { loginRequest } from '../authConfig'; // Import loginRequest
 import axios from 'axios'; // Import axios
@@ -9,16 +9,18 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const UsersContext = createContext();
 
 function Provider({ children }) {
-  // get the msal the account
-  const {instance, accounts } = useMsal();
+  // Get the MSAL account
+  const { instance, accounts } = useMsal();
   const account = accounts && accounts.length > 0 ? accounts[0] : null;
-  // log the account
+
+  // Log the account
   console.log('Account:', account);
-  
+
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
-  const fetchUsers = async () => {
+  // Define fetchUsers as a callback
+  const fetchUsers = useCallback(async () => {
     try {
       // Get the access token
       console.log("Attempting to acquire token silently...");
@@ -63,7 +65,7 @@ function Provider({ children }) {
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  };
+  }, [account, instance]); // Dependencies: account and instance
 
   const valueToShare = {
     users,
