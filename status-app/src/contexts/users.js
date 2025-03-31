@@ -29,7 +29,7 @@ function Provider({ children }) {
         ...loginRequest,
         account: account,
       });
-      console.log("Token acquired:", tokenResponse.accessToken);
+      // console.log("Token acquired:", tokenResponse.accessToken);
 
       // Make the POST request with the Authorization header
       const response = await axios.post(`${API_BASE_URL}/UpdateState`, user, {
@@ -53,7 +53,7 @@ function Provider({ children }) {
         ...loginRequest,
         account: account,
       });
-      console.log("Token acquired:", tokenResponse.accessToken);
+      // console.log("Token acquired:", tokenResponse.accessToken);
 
       // Make the GET request with the Authorization header
       const response = await axios.get(`${API_BASE_URL}/UpdateUsers`, {
@@ -75,9 +75,33 @@ function Provider({ children }) {
         status: user.status,
         leads: user.leads,
       }));
+      console.log("Mapped Users:", mappedUsers);
+
+      // order the users by name
+      mappedUsers.sort((a, b) => a.name.localeCompare(b.name));
+      console.log("Mapped Users:", mappedUsers);
+      // if there is a user Adrian, set it as last
+      const adrianIndex = mappedUsers.findIndex(user => user.name === "Adrian");
+      if (adrianIndex !== -1) {
+        const adrian = mappedUsers.splice(adrianIndex, 1)[0]; // Remove Adrian from the array
+        mappedUsers.push(adrian); // Add Adrian to the end of the array
+      }
+      console.log("Mapped Users:", mappedUsers);
+
+      // show me the name of the logged in user
+      console.log("Logged in user:", account.name);
+      // if the account name contains the string "Lucian" then make the chck below
+      if(!account.name.includes("Lucian")) {
+        // remove it from the list
+        const lucianIndex = mappedUsers.findIndex(user => user.name.includes("Lucian"));
+        if (lucianIndex !== -1) {
+          mappedUsers.splice(lucianIndex, 1); // Remove Lucian from the array
+        }
+        console.log("Mapped Users:", mappedUsers);
+      }
 
       setUsers(mappedUsers); // Set the users with the mapped response data
-      console.log("Mapped Users:", mappedUsers);
+    
 
       // Find the current user based on the account information
       const currentUser = mappedUsers.find((user) => user.id === account.localAccountId);
