@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import Font Awesome
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons"; // Import specific icons
 import UsersContext from "../contexts/users"; // Import the UsersContext
@@ -6,6 +6,7 @@ import "./CurrentUser.css"; // Import the CSS file for styling
 
 const CurrentUser = () => {
   const { currentUser, updateCurrentUser, fetchUsers } = useContext(UsersContext); // Access currentUser and setCurrentUser from the context
+  const [loading, setLoading] = useState(false); // State to track loading
 
   if (!currentUser || !currentUser.name) {
     return <div>No current user found.</div>; // Handle case where currentUser is not set
@@ -15,47 +16,57 @@ const CurrentUser = () => {
   const statusClass = `status-banner ${currentUser.status.toLowerCase()}`;
 
   // Handlers to change the status
-  const handleSetOnline = () => {
+  const handleSetOnline = async () => {
     if (currentUser.status !== "busy") {
-      updateCurrentUser({ ...currentUser, status: "online" });
-      fetchUsers();
+      setLoading(true); // Show loading overlay
+      await updateCurrentUser({ ...currentUser, status: "online" });
+      await fetchUsers();
+      setLoading(false); // Hide loading overlay
     }
   };
 
-  const handleSetOffline = () => {
-    // if the user is set offline, set the leads to 0
-    updateCurrentUser({ ...currentUser, status: "offline" });
-    fetchUsers();
+  const handleSetOffline = async () => {
+    setLoading(true); // Show loading overlay
+    await updateCurrentUser({ ...currentUser, status: "offline" });
+    await fetchUsers();
+    setLoading(false); // Hide loading overlay
   };
 
   // Handlers to increase and decrease leads
-  const handleIncreaseLeads = () => {
+  const handleIncreaseLeads = async () => {
     if (currentUser.leads < 4) {
       const newCurrentUser = { ...currentUser, leads: currentUser.leads + 1 };
       newCurrentUser.status = "online"; // set the status to online
-      // if the leads are 4, set the status to busy
       if (newCurrentUser.leads === 4) {
-        // just set the status to busy in the newCurrentUser object
-        newCurrentUser.status = "busy";
+        newCurrentUser.status = "busy"; // set the status to busy
       }
-      updateCurrentUser(newCurrentUser);
-      fetchUsers();
+      setLoading(true); // Show loading overlay
+      await updateCurrentUser(newCurrentUser);
+      await fetchUsers();
+      setLoading(false); // Hide loading overlay
     }
   };
 
-  const handleDecreaseLeads = () => {
+  const handleDecreaseLeads = async () => {
     if (currentUser.leads > 0) {
       const newCurrentUser = { ...currentUser, leads: currentUser.leads - 1 };
       if (newCurrentUser.leads < 4) {
         newCurrentUser.status = "online"; // set the status to online
       }
-      updateCurrentUser(newCurrentUser);
-      fetchUsers();
+      setLoading(true); // Show loading overlay
+      await updateCurrentUser(newCurrentUser);
+      await fetchUsers();
+      setLoading(false); // Hide loading overlay
     }
   };
 
   return (
     <div className="current-user">
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
+        </div>
+      )}
       <div className="leads-buttons">
         <button onClick={handleDecreaseLeads} title="Decrease Leads">
           <FontAwesomeIcon icon={faMinus} />
