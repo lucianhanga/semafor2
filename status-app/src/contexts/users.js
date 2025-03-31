@@ -90,13 +90,15 @@ function Provider({ children }) {
 
       // show me the name of the logged in user
       console.log("Logged in user:", account.name);
-      // if the loggedin user does not contain the substring "Lucian"
-      // remove it from the list
-      const lucianIndex = mappedUsers.findIndex(user => user.name.includes("Lucian"));
-      if (lucianIndex === -1) {
-        mappedUsers.splice(lucianIndex, 1); // Remove Lucian from the array
+      // if the account name contains the string "Lucian" then make the chck below
+      if(!account.name.includes("Lucian")) {
+        // remove it from the list
+        const lucianIndex = mappedUsers.findIndex(user => user.name.includes("Lucian"));
+        if (lucianIndex !== -1) {
+          mappedUsers.splice(lucianIndex, 1); // Remove Lucian from the array
+        }
+        console.log("Mapped Users:", mappedUsers);
       }
-      console.log("Mapped Users:", mappedUsers);
 
       setUsers(mappedUsers); // Set the users with the mapped response data
     
