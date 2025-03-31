@@ -55,7 +55,7 @@ resource "azurerm_linux_function_app" "api" {
     "CLIENT_ID"                       = azuread_application.semafor2_api.client_id,
     "CLIENT_SECRET"                   = azuread_application_password.semafor2_api_secret.value,
     "TENANT_ID"                       = data.azurerm_client_config.current.tenant_id
-#    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.app_insights.instrumentation_key
+#    "APPINSIGHTS_INSTRUMENTATIONKEY " = azurerm_application_insights.app_insights.instrumentation_key
   }
 
   auth_settings_v2 {
