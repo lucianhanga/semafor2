@@ -34,10 +34,10 @@ const CurrentUser = () => {
 
   // Handlers to increase and decrease leads
   const handleIncreaseLeads = async () => {
-    if (currentUser.leads < 4) {
+    if (currentUser.leads < 10) {
       const newCurrentUser = { ...currentUser, leads: currentUser.leads + 1 };
       newCurrentUser.status = "online"; // set the status to online
-      if (newCurrentUser.leads === 4) {
+      if (newCurrentUser.leads >= 4) {
         newCurrentUser.status = "busy"; // set the status to busy
       }
       setLoading(true); // Show loading overlay
